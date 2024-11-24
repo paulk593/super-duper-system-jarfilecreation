@@ -4,7 +4,7 @@ This is meant to be a repo where you can pull request your project in a certain 
 
 Directions
 - This is a public repository so everything is public to the internet
-- Do not put your name or any identifying information on your code, in the pull request or in any dependency 
+- Do not put your name or any identifying information in your code, in the pull request or in any dependency 
 - Ensure you have a manifest.txt file in the root of your directory that has the content "Main-Class: Main\n"
 - Ensure you have all your dependencies in a "lib" folder
 - Ensure you have a Main.java file
