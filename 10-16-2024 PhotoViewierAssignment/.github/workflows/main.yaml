@@ -1,9 +1,7 @@
 name: Build JAR File
 
 on:
-  pull_request:  # Trigger workflow only on pull requests
-    branches:
-      - '**'
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   build:
@@ -44,9 +42,17 @@ jobs:
           javac -d out -cp "lib/*" $(find src -name "*.java")
           jar cfm myproject.jar manifest.txt -C out . -C lib .
 
-      # Upload the JAR as an artifact
-      - name: Upload JAR artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: myproject
-          path: myproject.jar
+      # Move the JAR to the JAR Files directory
+      - name: Add JAR to JAR Files directory
+        run: |
+          mkdir -p "JAR Files"
+          mv myproject.jar "JAR Files/"
+
+      # Commit and push the JAR file to the repository
+      - name: Commit and Push JAR
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add "JAR Files/myproject.jar"
+          git commit -m "Add built JAR file [$(date)]"
+          git push
