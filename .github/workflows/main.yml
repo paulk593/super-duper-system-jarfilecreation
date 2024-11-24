@@ -45,7 +45,7 @@ jobs:
         if: env.dependencies == 'false'
         run: |
           mkdir -p out
-          javac -d out $(find "10-16-2024 PhotoViewierAssignment/src" -name "*.java")
+          javac -d out "$(find '10-16-2024 PhotoViewierAssignment/src' -name '*.java')"
           jar cfm myproject.jar "10-16-2024 PhotoViewierAssignment/manifest.txt" -C out .
 
       # Build JAR with dependencies and resources
@@ -53,7 +53,7 @@ jobs:
         if: env.dependencies == 'true'
         run: |
           mkdir -p out
-          javac -d out -cp "10-16-2024 PhotoViewierAssignment/lib/images/*" $(find "10-16-2024 PhotoViewierAssignment/src" -name "*.java")
+          javac -d out -cp "10-16-2024 PhotoViewierAssignment/lib/images/*" "$(find '10-16-2024 PhotoViewierAssignment/src' -name '*.java')"
           jar cfm myproject.jar "10-16-2024 PhotoViewierAssignment/manifest.txt" -C out . -C "10-16-2024 PhotoViewierAssignment/lib/images" .
 
       # Debug: Verify JAR file creation
