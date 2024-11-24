@@ -10,14 +10,14 @@ Directions
 - Ensure you have made all dependency references in your code as relative filepaths
 
 Example structure: 
-project/
-├── src/
-│   ├── Main.java
-│   ├── utils/
-│   │   └── Helper.java
-├── lib/
-│   └── chips/
-│       ├── chip1.png
-│       ├── chip2.png
-│       └── chip3.png
-├── manifest.txt
+- project/
+- ├── src/
+- │   ├── Main.java
+- │   ├── utils/
+- │   │   └── Helper.java
+- ├── lib/
+- │   └── chips/
+- │       ├── chip1.png
+- │       ├── chip2.png
+- │       └── chip3.png
+- ├── manifest.txt
