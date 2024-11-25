@@ -44,28 +44,28 @@ jobs:
       - name: Build JAR (no dependencies)
         if: env.dependencies == 'false'
         run: |
+          cd 10-16-2024\ PhotoViewierAssignment
           mkdir -p out
-          javac -d out "$(find '10-16-2024 PhotoViewierAssignment/src' -name '*.java')"
-          jar cfm myproject.jar "10-16-2024 PhotoViewierAssignment/manifest.txt" -C out .
+          javac -d out src/*.java
+          jar cvfm myproject.jar manifest.txt -C out .
+          mv myproject.jar "../JAR Files/myproject.jar"
 
       # Build JAR with dependencies and resources
       - name: Build JAR (with dependencies and resources)
         if: env.dependencies == 'true'
         run: |
+          cd 10-16-2024\ PhotoViewierAssignment
           mkdir -p out
-          javac -d out -cp "10-16-2024 PhotoViewierAssignment/lib/images/*" "$(find '10-16-2024 PhotoViewierAssignment/src' -name '*.java')"
-          jar cfm myproject.jar "10-16-2024 PhotoViewierAssignment/manifest.txt" -C out . -C "10-16-2024 PhotoViewierAssignment/lib/images" .
+          javac -d out src/*.java
+          cp -r lib/images out/lib/images
+          jar cvfm myproject.jar manifest.txt -C out .
+          mv myproject.jar "../JAR Files/myproject.jar"
 
       # Debug: Verify JAR file creation
       - name: Verify JAR creation
         run: |
-          test -f myproject.jar && echo "JAR file created successfully" || echo "JAR file creation failed"
-
-      # Move the JAR to the JAR Files directory
-      - name: Add JAR to JAR Files directory
-        run: |
-          mkdir -p "JAR Files"
-          mv myproject.jar "JAR Files/"
+          ls -R "JAR Files"
+          test -f "JAR Files/myproject.jar" && echo "JAR file created successfully" || echo "JAR file creation failed"
 
       # Commit and push the JAR file to the repository
       - name: Commit and Push JAR
