@@ -33,7 +33,7 @@ jobs:
             echo "dependencies=false" >> $GITHUB_ENV
           fi
 
-      # Debug: Verify dependencies and manifest
+      # Debug: Verify required files
       - name: Verify required files
         run: |
           echo "Checking required files..."
@@ -55,9 +55,9 @@ jobs:
         if: env.dependencies == 'true'
         run: |
           cd 10-16-2024\ PhotoViewierAssignment
-          mkdir -p out
+          mkdir -p out/lib/images  # Ensure the target directory exists
           javac -d out src/*.java
-          cp -r lib/images out/lib/images
+          cp -r lib/images/* out/lib/images/  # Copy the images into the correct location
           jar cvfm myproject.jar manifest.txt -C out .
           mv myproject.jar "../JAR Files/myproject.jar"
 
