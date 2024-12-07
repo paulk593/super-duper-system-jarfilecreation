@@ -35,7 +35,11 @@ jobs:
           # Compile Java files into the 'out' directory
           javac -d out src/*.java
 
-          # Package the compiled files into a JAR
+          # Copy images into the 'out' directory
+          mkdir -p out/src/images
+          cp -r src/images/* out/src/images/
+
+          # Package the compiled files and resources into a JAR
           jar cvfm myproject.jar manifest.txt -C out .
 
           # Move the JAR file to the JARFiles directory in the repository
