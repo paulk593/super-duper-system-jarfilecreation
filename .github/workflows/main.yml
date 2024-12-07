@@ -1,32 +1,57 @@
 name: Build JAR File
 
 on:
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  build-jar:
-    runs-on: ubuntu-latest # Use a Linux machine to build
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-      with:
-        path: repo # Ensure it matches your structure
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set Up Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17' # Adjust this based on your project requirements
+      # Debug: List repository contents
+      - name: List repository contents
+        run: ls -R
 
-    - name: Compile Java Files
-      working-directory: repo/10-16-2024\ PhotoViewierAssignment
-      run: |
-        mkdir -p out # Create the output directory
-        javac -d out src/*.java
+      # Set up Java environment
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
 
-    - name: Create JAR File
-      working-directory: repo/10-16-2024\ PhotoViewierAssignment
-      run: |
-        jar cvfm myproject.jar manifest.txt -C out .
-        mv myproject.jar ../../JAR\ File/ # Move the JAR file to the "JAR File" folder
+      # Build JAR File
+      - name: Build JAR
+        run: |
+          # Navigate to the assignment directory
+          cd 10-16-2024\ PhotoViewierAssignment
+
+          # Create 'out' directory for compiled classes
+          mkdir -p out
+
+          # Compile Java files into the 'out' directory
+          javac -d out src/*.java
+
+          # Package the compiled files into a JAR
+          jar cvfm myproject.jar manifest.txt -C out .
+
+          # Move the JAR file to the JARFiles directory in the repository
+          mv myproject.jar ../JARFiles/myproject.jar
+
+      # Debug: Verify JAR file creation
+      - name: Verify JAR creation
+        run: |
+          ls -R JARFiles
+          test -f "JARFiles/myproject.jar" && echo "JAR file created successfully" || echo "JAR file creation failed"
+
+      # Commit and push the JAR file to the repository
+      - name: Commit and Push JAR
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add "JARFiles/myproject.jar"
+          git commit -m "Add built JAR file [$(date)]"
+          git push
