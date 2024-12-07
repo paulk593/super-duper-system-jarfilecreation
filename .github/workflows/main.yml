@@ -39,7 +39,7 @@ jobs:
           jar cvfm myproject.jar manifest.txt -C out .
 
           # Move the JAR file to the JARFiles directory in the repository
-          mv myproject.jar ../JARFiles/
+          mv myproject.jar ../JARFiles/myproject.jar
 
       # Debug: Verify JAR file creation
       - name: Verify JAR creation
