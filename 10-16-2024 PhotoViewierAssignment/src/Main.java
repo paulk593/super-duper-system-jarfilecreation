@@ -6,9 +6,9 @@ public class Main {
     public static int current = 0;
     public static void main(String[] args) {
         ImageIcon[] images = {
-            new ImageIcon("lib\\images\\image1.png"),
-            new ImageIcon("lib\\images\\image2.png"),
-            new ImageIcon("lib\\images\\image3.png")
+            new ImageIcon("src\\images\\image1.png"),
+            new ImageIcon("src\\images\\image2.png"),
+            new ImageIcon("src\\images\\image3.png")
         };
         
         JFrame frame = new JFrame("Photo Viewer");
